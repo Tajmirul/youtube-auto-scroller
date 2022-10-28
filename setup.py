@@ -65,7 +65,6 @@ def getVideoUrl():
     video_length = yt.length
     return video_length
 
-
 def init():
     """Initializes the program"""
     os.system("cls")
