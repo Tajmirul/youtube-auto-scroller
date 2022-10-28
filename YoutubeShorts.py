@@ -1,15 +1,12 @@
-
+import pyperclip
 from pytube import YouTube
 import os
-import webbrowser
 import pyautogui
-import shutil
 import colorama
-import random
 import time
-import keyboard
-import json
 from colorama import Fore, Back, Style
+from youtubeVideoLength import get_video_length
+
 colorama.init(autoreset=True)
 
 
@@ -37,7 +34,7 @@ LWHITE = F"{Fore.LIGHTWHITE_EX}"
 pauseKey = "ctrl"
 resumeKey = "ctrl"
 timeoutForEachVideo = 15
-initialTimeOut = 8
+initialTimeOut = 3
 waitBeforeRefresh = 15
 global totalVideoCount
 totalVideoCount = 0
@@ -77,35 +74,55 @@ def init():
     print(f"{LYELLOW}Initiating script !!!", end="\n")
     print(f"Switch your cursor to Youtube window", end="\n")
 
-    for i in range(initialTimeOut+1, 0, -1):
+    for i in range(initialTimeOut + 1, 0, -1):
         time.sleep(1)
         print(f"\r{LYELLOW}Starting in {i} seconds", end="")
 
     print(f"", end="\n")
     os.system("cls")
 
-    total = store[-1]
+    try:
+        total = store[-1]
+    except Exception as e:
+        total = 0
+
     # print(f"{store}",end="\n")
     # print(f"{total}",end="\n")
     print(f"{LGREEN}Total videos watched till now {total}", end="\n")
     print(f"{LGREEN}Total videos watched {totalVideoCount}", end="\n")
     main(totalVideoCount, total)
 
+def getVideoId(url):
+    videoId = url.split("/shorts/")[1]
+    return videoId
 
 def main(totalVideoCount, total):
-    #c = getVideoUrl()
-    c = timeoutForEachVideo
-    while c > 0:
-        print(f"\r{LCYAN}{c} second(s)\t{LGREEN}{'▆'*c:10} ", end="")
+    pyautogui.press("f6")  # to focus the url bar
+    pyautogui.hotkey("ctrl", "c")  # copy the url of the video
+    # press esc twice to focus the video
+    pyautogui.press("esc")
+    pyautogui.press("esc")
+
+    video_url = pyperclip.paste()
+    video_id = getVideoId(video_url)
+    duration = get_video_length(video_id)
+    duration = duration[0] * 3600 + duration[1] * 60 + duration[2]
+    print(duration, 'seconds')
+
+    # timer
+    while duration > 0:
+        print(f"\r{LCYAN}{duration} second(s)\t{LGREEN}{'▆' * duration:10} ", end="")
         #for k in range(c): print(f"\r{'▆'*c}", end="")
         #if keyboard.read_key() == pauseKey: print("Paused")
         time.sleep(1)
-        c -= 1
+        duration -= 1
+
     totalVideoCount += 1
     total = int(total)+1
     addition(total)
     os.system("cls")
     initialRead()
+
     print(f"{LGREEN}Total videos watched till now {total}", end="\n")
     print(f"{LGREEN}Total videos watched {totalVideoCount}", end="\n")
     pyautogui.press("down")

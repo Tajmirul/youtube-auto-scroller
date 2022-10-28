@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 import re
 import requests
@@ -8,7 +7,11 @@ def get_video_length(video_id):
     api_key = "AIzaSyCKsLGM632TYM8PyJ-ohQb3u-L9D6twQNE"
     searchUrl = f"https://www.googleapis.com/youtube/v3/videos?id={video_id}&key={api_key}&part=contentDetails"
 
-    response = requests.get(searchUrl)
+    try:
+        response = requests.get(searchUrl)
+    except Exception as e:
+        print("Please check your internet connection")
+
     data = json.loads(response.text)
 
     all_data = data['items']

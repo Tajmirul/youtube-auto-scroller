@@ -1,0 +1,5 @@
+colorama==0.4.5
+keyboard==0.13.5
+pyautogui==0.9.53
+pytube==12.1.0
+requests==2.28.1
