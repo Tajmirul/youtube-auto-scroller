@@ -1,0 +1,8 @@
+{
+    "pauseKey": "ctrl",
+    "resumeKey": "ctrl",
+    "timeoutForEachVideo": 15,
+    "initialTimeOut": 8,
+    "waitBeforeRefresh": 15,
+    "totalVideoCount": 0
+}
