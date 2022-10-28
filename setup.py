@@ -34,7 +34,7 @@ LWHITE = F"{Fore.LIGHTWHITE_EX}"
 pauseKey = "ctrl"
 resumeKey = "ctrl"
 timeoutForEachVideo = 15
-initialTimeOut = 3
+initialTimeOut = 9
 waitBeforeRefresh = 15
 global totalVideoCount
 totalVideoCount = 0
